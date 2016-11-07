@@ -3,17 +3,18 @@ package ru.rbs.http.api.methods;
 import ru.rbs.http.api.client.HostsProvider;
 import ru.rbs.http.api.domain.BaseApiRequest;
 import ru.rbs.http.api.domain.RegisterOrderParams;
-import ru.rbs.http.api.methods.adapters.RegisterOrderProcessTypeAdapter;
+import ru.rbs.http.api.methods.adapters.RegisterPreAuthOrderProcessTypeAdapter;
 
-public class RegisterOrderProcess extends BaseProcess {
+public class RegisterPreAuthOrderProcess extends BaseProcess {
+
     public String orderId;
     public String formUrl;
 
-    public static final class Request extends BaseApiRequest<RegisterOrderProcess> {
+    public static final class Request extends BaseApiRequest<RegisterPreAuthOrderProcess> {
 
         @Override
         protected String requestUrlBase(HostsProvider hostsProvider) {
-            return hostsProvider.getRbsApi() + "/rest/register.do";
+            return hostsProvider.getRbsApi() + "/rest/registerPreAuth.do";
         }
 
         public static Request newInstance(RegisterOrderParams registerOrderParams) {
@@ -21,7 +22,7 @@ public class RegisterOrderProcess extends BaseProcess {
         }
 
         private Request(RegisterOrderParams registerOrderParams) {
-            super(new RegisterOrderProcessTypeAdapter());
+            super(new RegisterPreAuthOrderProcessTypeAdapter());
             addParameters(registerOrderParams);
         }
 
@@ -48,10 +49,10 @@ public class RegisterOrderProcess extends BaseProcess {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("RegisterOrderProcess{");
+        final StringBuilder sb = new StringBuilder("RegisterPreAuthOrderProcess{");
         sb.append("errorCode='").append(getErrorCode()).append('\'');
         sb.append(", errorMessage='").append(getErrorMessage()).append('\'');
-        sb.append(", orderId='").append(orderId).append('\'');
+        sb.append("orderId='").append(orderId).append('\'');
         sb.append(", formUrl='").append(formUrl).append('\'');
         sb.append('}');
         return sb.toString();

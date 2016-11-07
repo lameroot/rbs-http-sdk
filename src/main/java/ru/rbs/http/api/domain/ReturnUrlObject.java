@@ -37,7 +37,6 @@ public class ReturnUrlObject {
     }
 
     public ReturnUrlObject addParam(String key, String value) {
-        if ( null == params ) params = new HashMap<>();
         params.put(key, value);
         return this;
     }

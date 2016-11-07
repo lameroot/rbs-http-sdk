@@ -11,18 +11,9 @@ public class PaymentOrderProcess extends BaseProcess {
     public ReturnUrlObject returnUrlObject;
     public String info;
 
-
-//    public String redirect;
-//    public String info;
-//    public String error;
-//    public String acsUrl;
-//    public String paReq;
-//    public String termUrl;
-//    public String pnr;
-
-//    public boolean isSslPayment() {
-//        return Objects.isNull(acsUrl);
-//    }
+    public boolean isSslPayment() {
+        return returnUrlObject.getParams().containsKey("termUrl");
+    }
 
     public static final class Request extends BaseApiRequest<PaymentOrderProcess> {
         @Override
