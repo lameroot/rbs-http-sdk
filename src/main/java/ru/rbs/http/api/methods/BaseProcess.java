@@ -20,4 +20,8 @@ public abstract class BaseProcess {
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
     }
+
+    public boolean isSuccess() {
+        return null == errorCode || errorCode == 0;
+    }
 }

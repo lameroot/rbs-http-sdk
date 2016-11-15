@@ -9,7 +9,7 @@ public class RegisterOrderParams extends AuthParams {
     private String failUrl;
     private String description;
     private String language;
-    private PageView pageView;
+    private PageView pageView = PageView.DESKTOP;
     private String clientId;
     private String merchantLogin;
     private String jsonParams;

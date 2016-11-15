@@ -12,7 +12,7 @@ public class PaymentOrderProcess extends BaseProcess {
     public String info;
 
     public boolean isSslPayment() {
-        return returnUrlObject.getParams().containsKey("termUrl");
+        return !returnUrlObject.getParams().containsKey("termUrl");
     }
 
     public static final class Request extends BaseApiRequest<PaymentOrderProcess> {

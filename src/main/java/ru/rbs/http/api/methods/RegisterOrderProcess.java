@@ -2,6 +2,7 @@ package ru.rbs.http.api.methods;
 
 import ru.rbs.http.api.client.HostsProvider;
 import ru.rbs.http.api.domain.BaseApiRequest;
+import ru.rbs.http.api.domain.PageView;
 import ru.rbs.http.api.domain.RegisterOrderParams;
 import ru.rbs.http.api.methods.adapters.RegisterOrderProcessTypeAdapter;
 
@@ -35,7 +36,7 @@ public class RegisterOrderProcess extends BaseProcess {
             addParameter("failUrl",registerOrderParams.getFailUrl());
             addParameter("description",registerOrderParams.getDescription());
             addParameter("language",registerOrderParams.getLanguage());
-            addParameter("pageView",registerOrderParams.getPageView().name());
+            addParameter("pageView",null != registerOrderParams.getPageView() ? registerOrderParams.getPageView().name() : PageView.DESKTOP.name());
             addParameter("clientId",registerOrderParams.getClientId());
             addParameter("merchantLogin",registerOrderParams.getMerchantLogin());
             addParameter("jsonParams",registerOrderParams.getJsonParams());

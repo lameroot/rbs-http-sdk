@@ -18,17 +18,22 @@ public class PaymentOrderProcessProcessTypeAdapter extends BaseProcessTypeAdapte
         PaymentOrderProcess paymentOrderProcess = new PaymentOrderProcess();
 
         JsonNode jsonNode = objectMapper.readTree(json);
-        paymentOrderProcess.info = jsonNode.get("info").asText();
+        if ( jsonNode.has("errorCode") && 0 != jsonNode.get("errorCode").asInt() ) {
+            paymentOrderProcess.setErrorCode(jsonNode.get("errorCode").asInt());
+            paymentOrderProcess.setErrorMessage(jsonNode.get("errorMessage").asText());
+            return paymentOrderProcess;
+        }
+        paymentOrderProcess.info = jsonNode.has("info") ? jsonNode.get("info").asText() : null;
         ReturnUrlObject returnUrlObject = new ReturnUrlObject();
         if ( jsonNode.has("acsUrl") ) {//3ds payment
             returnUrlObject.setAction(ReturnUrlObject.ReturnAction.POST);
             returnUrlObject.setUrl(jsonNode.get("acsUrl").asText());
-            returnUrlObject.addParam("paReq",jsonNode.get("paReq").asText());
-            returnUrlObject.addParam("termUrl",jsonNode.get("termUrl").asText());
+            returnUrlObject.addParam("paReq",jsonNode.has("paReq") ? jsonNode.get("paReq").asText() : null);
+            returnUrlObject.addParam("termUrl",jsonNode.has("termUrl") ? jsonNode.get("termUrl").asText() : null);
         }
         else {//ssl
             returnUrlObject.setAction(ReturnUrlObject.ReturnAction.REDIRECT);
-            returnUrlObject.setUrl(jsonNode.get("redirect").asText());
+            returnUrlObject.setUrl(jsonNode.has("redirect") ? jsonNode.get("redirect").asText() : null);
         }
 
         paymentOrderProcess.returnUrlObject = returnUrlObject;

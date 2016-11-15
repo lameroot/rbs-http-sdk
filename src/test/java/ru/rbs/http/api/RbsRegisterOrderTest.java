@@ -54,6 +54,7 @@ public class RbsRegisterOrderTest extends TestCase {
         PaymentOrderProcess paymentOrderProcess = client.execute(PaymentOrderProcess.Request.newInstance(paymentOrderParams));
         assertNotNull(paymentOrderProcess);
         System.out.println(paymentOrderProcess);
+        assertTrue(paymentOrderProcess.isSslPayment());
 
         OrderStatusExtendedParams orderStatusExtendedParams = new OrderStatusExtendedParams();
         orderStatusExtendedParams.setLanguage("en");
