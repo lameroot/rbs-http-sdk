@@ -1,6 +1,7 @@
 package ru.rbs.http.api.client;
 
-import ru.rbs.http.api.util.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.rbs.http.api.util.Numbers;
 
 import javax.net.ssl.HandshakeCompletedListener;
@@ -18,7 +19,8 @@ import static ru.rbs.http.api.util.Common.checkNotNull;
 
 final class WireLoggingSocketFactory extends SSLSocketFactory {
 
-    private static final String TAG = WireLoggingSocketFactory.class.getName();
+    //private static final String TAG = WireLoggingSocketFactory.class.getName();
+    private static final Logger logger = LoggerFactory.getLogger(WireLoggingSocketFactory.class);
 
     private final SSLSocketFactory delegate;
 
@@ -38,31 +40,31 @@ final class WireLoggingSocketFactory extends SSLSocketFactory {
 
     public Socket createSocket(Socket s, String host, int port,
                                boolean autoClose) throws IOException {
-        Log.i(TAG, "Creating socket: " + host + ":" + port);
+        logger.info("Creating socket: " + host + ":" + port);
         return new WireLogSocket((SSLSocket) delegate.createSocket(s, host, port, autoClose));
     }
 
     @Override
     public Socket createSocket(String s, int i) throws IOException {
-        Log.i(TAG, "Creating socket: " + s + ":" + i);
+        logger.info("Creating socket: " + s + ":" + i);
         return new WireLogSocket((SSLSocket) delegate.createSocket(s, i));
     }
 
     @Override
     public Socket createSocket(String s, int i, InetAddress inetAddress, int i2) throws IOException {
-        Log.i(TAG, "Creating socket: " + inetAddress);
+        logger.info("Creating socket: " + inetAddress);
         return new WireLogSocket((SSLSocket) delegate.createSocket(s, i, inetAddress, i2));
     }
 
     @Override
     public Socket createSocket(InetAddress inetAddress, int i) throws IOException {
-        Log.i(TAG, "Creating socket: " + inetAddress);
+        logger.info("Creating socket: " + inetAddress);
         return new WireLogSocket((SSLSocket) delegate.createSocket(inetAddress, i));
     }
 
     @Override
     public Socket createSocket(InetAddress inetAddress, int i, InetAddress inetAddress2, int i2) throws IOException {
-        Log.i(TAG, "Creating socket: " + inetAddress);
+        logger.info("Creating socket: " + inetAddress);
         return new WireLogSocket((SSLSocket) delegate.createSocket(inetAddress, i, inetAddress2, i2));
     }
 
@@ -95,7 +97,7 @@ final class WireLoggingSocketFactory extends SSLSocketFactory {
                     buffer.append((char) b);
                 }
             }
-            Log.i(TAG, buffer.toString());
+            logger.info(buffer.toString());
         }
 
         @Override

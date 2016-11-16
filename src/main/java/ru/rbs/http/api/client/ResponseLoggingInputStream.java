@@ -1,6 +1,7 @@
 package ru.rbs.http.api.client;
 
-import ru.rbs.http.api.util.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -15,6 +16,7 @@ import static ru.rbs.http.api.util.Common.checkNotNull;
 final class ResponseLoggingInputStream extends InputStream {
 
     private static final String TAG = ResponseLoggingInputStream.class.getName();
+    private final Logger logger = LoggerFactory.getLogger(ResponseLoggingInputStream.class);
 
     private final InputStream inputStream;
     private final ByteArrayOutputStream buffer;
@@ -55,6 +57,6 @@ final class ResponseLoggingInputStream extends InputStream {
     public void close() throws IOException {
         inputStream.close();
         buffer.close();
-        Log.i(TAG, buffer.toString("UTF-8"));
+        logger.info(buffer.toString("UTF-8"));
     }
 }
