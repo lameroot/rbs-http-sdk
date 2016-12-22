@@ -4,7 +4,7 @@ import junit.framework.TestCase;
 import org.junit.Test;
 import ru.rbs.http.api.client.ApiClient;
 import ru.rbs.http.api.client.DefaultApiClient;
-import ru.rbs.http.api.client.providers.TestPaymentGateAlfaHostProvider;
+import ru.rbs.http.api.client.providers.WebRbsDevAlfaHostProvider;
 import ru.rbs.http.api.domain.OrderStatusExtendedParams;
 import ru.rbs.http.api.domain.PageView;
 import ru.rbs.http.api.domain.PaymentOrderParams;
@@ -19,8 +19,9 @@ public class RbsRegisterOrderTest extends TestCase {
 
     private ApiClient client = new DefaultApiClient.Builder()
             .setDebugMode(true)
-            //.setHostsProvider(new WebRbsDevAlfaHostProvider())
-            .setHostsProvider(new TestPaymentGateAlfaHostProvider())
+            .setHostsProvider(new WebRbsDevAlfaHostProvider())
+            //.setHostsProvider(new TestPaymentGateAlfaHostProvider())
+            //.setHostsProvider(new LocalhostHostProvider("http://localhost/payment"))
             .create();
 
     @Test
@@ -44,8 +45,8 @@ public class RbsRegisterOrderTest extends TestCase {
         paymentOrderParams.setUserName("test");
         paymentOrderParams.setPassword("testPwd");
         paymentOrderParams.setMdOrder(registerOrderProcess.orderId);
-        //paymentOrderParams.setPan("5555555555555599");
-        paymentOrderParams.setPan("4111111111111111");
+        paymentOrderParams.setPan("5555555555555599");
+        //paymentOrderParams.setPan("4111111111111111");
         paymentOrderParams.setCvc("123");
         paymentOrderParams.setExpiry("201912");
         paymentOrderParams.setCardHolder("test test");
