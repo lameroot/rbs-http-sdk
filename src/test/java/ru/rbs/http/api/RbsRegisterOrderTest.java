@@ -12,6 +12,7 @@ import ru.rbs.http.api.domain.RegisterOrderParams;
 import ru.rbs.http.api.methods.OrderStatusExtendedProcess;
 import ru.rbs.http.api.methods.PaymentOrderProcess;
 import ru.rbs.http.api.methods.RegisterOrderProcess;
+import ru.rbs.http.api.util.JsonParamsHelper;
 
 import java.util.UUID;
 
@@ -30,11 +31,13 @@ public class RbsRegisterOrderTest extends TestCase {
         registerOrderParams.setAmount(100L);
         registerOrderParams.setCurrency("810");
         registerOrderParams.setLanguage("en");
-        registerOrderParams.setOrderNumber(UUID.randomUUID().toString().substring(0,20));
+        registerOrderParams.setOrderNumber(UUID.randomUUID().toString().substring(0, 20));
         registerOrderParams.setUserName("test");
         registerOrderParams.setPassword("testPwd");
         registerOrderParams.setReturnUrl("http://ya.ru");
-        registerOrderParams.setJsonParams("{\"orderNumber\":1234567890}");
+
+        //registerOrderParams.setJsonParams("{\"orderNumber\":1234567890}");
+        registerOrderParams.setJsonParams(new JsonParamsHelper().add("orderNumber",1234567890).add("name","test").toString());
         registerOrderParams.setPageView(PageView.DESKTOP);
 
         RegisterOrderProcess registerOrderProcess = client.execute(RegisterOrderProcess.Request.newInstance(registerOrderParams));
