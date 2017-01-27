@@ -22,8 +22,8 @@ public class HttpClientFactory {
      * @param enableLogging {@code true} if logging is required
      * @return new HTTP client
      */
-    public static OkHttpClient newOkHttpClient(boolean enableLogging) {
-        OkHttpClient.Builder builder = createDefaultOkHttpClientBuilder();
+    public static OkHttpClient newOkHttpClient(boolean enableLogging, Long timeout) {
+        OkHttpClient.Builder builder = createDefaultOkHttpClientBuilder(timeout);
         if (enableLogging) {
             applyLogging(builder);
         }
@@ -35,8 +35,7 @@ public class HttpClientFactory {
      *
      * @return instance of {@link OkHttpClient.Builder}
      */
-    public static OkHttpClient.Builder createDefaultOkHttpClientBuilder() {
-        final long timeout = 30;
+    public static OkHttpClient.Builder createDefaultOkHttpClientBuilder(Long timeout) {
         return new OkHttpClient.Builder()
                 .readTimeout(timeout, TimeUnit.SECONDS)
                 .connectTimeout(timeout, TimeUnit.SECONDS)

@@ -14,12 +14,14 @@ public class DefaultApiClient implements ApiClient {
     private final HostsProvider hostsProvider;
     private final boolean debugMode;
     private final OkHttpClient httpClient;
+    private Long timeout = 30L;
 
     protected DefaultApiClient(Builder builder) {
         hostsProvider = builder.hostsProvider;
         debugMode = builder.debugMode;
+        if (null != builder.timeout) timeout = builder.timeout;
         if (builder.httpClient == null) {
-            builder.httpClient = HttpClientFactory.newOkHttpClient(debugMode);
+            builder.httpClient = HttpClientFactory.newOkHttpClient(debugMode, timeout);
         }
         httpClient = builder.httpClient;
     }
@@ -40,6 +42,7 @@ public class DefaultApiClient implements ApiClient {
         private boolean debugMode = false;
         private HostsProvider hostsProvider;
         private OkHttpClient httpClient;
+        private Long timeout;
 
         public final Builder setDebugMode(boolean debugMode) {
             this.debugMode = debugMode;
@@ -51,6 +54,10 @@ public class DefaultApiClient implements ApiClient {
         }
         public final Builder setHttpClient(OkHttpClient httpClient) {
             this.httpClient = httpClient;
+            return this;
+        }
+        public final Builder setTimeout(Long timeout) {
+            this.timeout = timeout;
             return this;
         }
         public DefaultApiClient create() {

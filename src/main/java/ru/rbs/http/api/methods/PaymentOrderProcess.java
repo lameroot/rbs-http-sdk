@@ -1,6 +1,5 @@
 package ru.rbs.http.api.methods;
 
-import ru.rbs.http.api.client.HostsProvider;
 import ru.rbs.http.api.domain.BaseApiRequest;
 import ru.rbs.http.api.domain.PaymentOrderParams;
 import ru.rbs.http.api.domain.ReturnUrlObject;
@@ -8,17 +7,18 @@ import ru.rbs.http.api.methods.adapters.PaymentOrderProcessProcessTypeAdapter;
 
 public class PaymentOrderProcess extends BaseProcess {
 
-    public ReturnUrlObject returnUrlObject;
-    public String info;
+    private ReturnUrlObject returnUrlObject;
+    private String info;
 
     public boolean isSslPayment() {
         return !returnUrlObject.getParams().containsKey("termUrl");
     }
 
     public static final class Request extends BaseApiRequest<PaymentOrderProcess> {
+
         @Override
-        protected String requestUrlBase(HostsProvider hostsProvider) {
-            return hostsProvider.getRbsApi() + "/rest/processform.do";
+        protected String requestUri() {
+            return "/rest/processform.do";
         }
 
         @Override
@@ -31,8 +31,7 @@ public class PaymentOrderProcess extends BaseProcess {
         }
         private Request(PaymentOrderParams paymentOrderParams) {
             super(new PaymentOrderProcessProcessTypeAdapter());
-            addParameter("userName", paymentOrderParams.getUserName());
-            addParameter("password", paymentOrderParams.getPassword());
+            addAuthParameters(paymentOrderParams);
             addParameter("language", paymentOrderParams.getLanguage());
             addParameter("MDORDER", paymentOrderParams.getMdOrder());
             addParameter("paymentWay",paymentOrderParams.getPaymentWay());
@@ -55,20 +54,21 @@ public class PaymentOrderProcess extends BaseProcess {
         }
     }
 
-//    @Override
-//    public String toString() {
-//        final StringBuilder sb = new StringBuilder("PaymentOrderProcess{");
-//        sb.append("redirect='").append(redirect).append('\'');
-//        sb.append(", info='").append(info).append('\'');
-//        sb.append(", error='").append(error).append('\'');
-//        sb.append(", acsUrl='").append(acsUrl).append('\'');
-//        sb.append(", paReq='").append(paReq).append('\'');
-//        sb.append(", termUrl='").append(termUrl).append('\'');
-//        sb.append(", pnr='").append(pnr).append('\'');
-//        sb.append('}');
-//        return sb.toString();
-//    }
+    public ReturnUrlObject getReturnUrlObject() {
+        return returnUrlObject;
+    }
 
+    public void setReturnUrlObject(ReturnUrlObject returnUrlObject) {
+        this.returnUrlObject = returnUrlObject;
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
 
     @Override
     public String toString() {

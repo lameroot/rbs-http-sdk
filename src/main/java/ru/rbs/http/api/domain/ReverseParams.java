@@ -1,15 +1,14 @@
 package ru.rbs.http.api.domain;
 
-public class OrderStatusExtendedParams extends AuthParams {
+public class ReverseParams extends AuthParams {
 
     private String orderId;
-    private String orderNumber;
     private String language;
 
-    public OrderStatusExtendedParams() {
+    public ReverseParams() {
     }
 
-    public OrderStatusExtendedParams(String userName, String password, String hostProviderUrl) {
+    public ReverseParams(String userName, String password, String hostProviderUrl) {
         super(userName, password, hostProviderUrl);
     }
 
@@ -19,14 +18,6 @@ public class OrderStatusExtendedParams extends AuthParams {
 
     public void setOrderId(String orderId) {
         this.orderId = orderId;
-    }
-
-    public String getOrderNumber() {
-        return orderNumber;
-    }
-
-    public void setOrderNumber(String orderNumber) {
-        this.orderNumber = orderNumber;
     }
 
     public String getLanguage() {

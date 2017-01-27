@@ -4,6 +4,16 @@ public abstract class AuthParams {
 
     private String userName;
     private String password;
+    private String hostProviderUrl;
+
+    public AuthParams() {
+    }
+
+    public AuthParams(String userName, String password, String hostProviderUrl) {
+        this.userName = userName;
+        this.password = password;
+        this.hostProviderUrl = hostProviderUrl;
+    }
 
     public String getUserName() {
         return userName;
@@ -19,5 +29,13 @@ public abstract class AuthParams {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getHostProviderUrl() {
+        return hostProviderUrl;
+    }
+
+    public void setHostProviderUrl(String hostProviderUrl) {
+        this.hostProviderUrl = hostProviderUrl;
     }
 }

@@ -1,20 +1,36 @@
 package ru.rbs.http.api.methods;
 
-import ru.rbs.http.api.client.HostsProvider;
 import ru.rbs.http.api.domain.BaseApiRequest;
 import ru.rbs.http.api.domain.PageView;
 import ru.rbs.http.api.domain.RegisterOrderParams;
 import ru.rbs.http.api.methods.adapters.RegisterOrderProcessTypeAdapter;
 
 public class RegisterOrderProcess extends BaseProcess {
-    public String orderId;
-    public String formUrl;
+
+    private String orderId;
+    private String formUrl;
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
+
+    public String getFormUrl() {
+        return formUrl;
+    }
+
+    public void setFormUrl(String formUrl) {
+        this.formUrl = formUrl;
+    }
 
     public static final class Request extends BaseApiRequest<RegisterOrderProcess> {
 
         @Override
-        protected String requestUrlBase(HostsProvider hostsProvider) {
-            return hostsProvider.getRbsApi() + "/rest/register.do";
+        protected String requestUri() {
+            return "/rest/register.do";
         }
 
         public static Request newInstance(RegisterOrderParams registerOrderParams) {
@@ -27,8 +43,7 @@ public class RegisterOrderProcess extends BaseProcess {
         }
 
         protected void addParameters(RegisterOrderParams registerOrderParams) {
-            addParameter("userName", registerOrderParams.getUserName());
-            addParameter("password", registerOrderParams.getPassword());
+            addAuthParameters(registerOrderParams);
             addParameter("orderNumber",registerOrderParams.getOrderNumber());
             addParameter("amount",registerOrderParams.getAmount());
             addParameter("currency",registerOrderParams.getCurrency());
@@ -39,7 +54,7 @@ public class RegisterOrderProcess extends BaseProcess {
             addParameter("pageView",null != registerOrderParams.getPageView() ? registerOrderParams.getPageView().name() : PageView.DESKTOP.name());
             addParameter("clientId",registerOrderParams.getClientId());
             addParameter("merchantLogin",registerOrderParams.getMerchantLogin());
-            addParameter("jsonParams",registerOrderParams.getJsonParams());
+            addParameter("jsonParams",registerOrderParams.getJsonParams().toString());
             addParameter("sessionTimeoutSecs",registerOrderParams.getSessionTimeoutSecs());
             addParameter("expirationDate",registerOrderParams.getExpirationDate());
             addParameter("bindingId",registerOrderParams.getBindingId());

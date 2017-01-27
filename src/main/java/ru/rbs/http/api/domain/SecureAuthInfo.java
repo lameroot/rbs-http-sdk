@@ -2,9 +2,33 @@ package ru.rbs.http.api.domain;
 
 public class SecureAuthInfo {
 
-    public String eci;
-    public String cavv;
-    public String xid;
+    private String eci;
+    private String cavv;
+    private String xid;
+
+    public String getEci() {
+        return eci;
+    }
+
+    public void setEci(String eci) {
+        this.eci = eci;
+    }
+
+    public String getCavv() {
+        return cavv;
+    }
+
+    public void setCavv(String cavv) {
+        this.cavv = cavv;
+    }
+
+    public String getXid() {
+        return xid;
+    }
+
+    public void setXid(String xid) {
+        this.xid = xid;
+    }
 
     @Override
     public String toString() {

@@ -21,6 +21,13 @@ public class PaymentOrderParams extends AuthParams {
     private String pointsAmount;
     private String loyaltyId;
 
+    public PaymentOrderParams() {
+    }
+
+    public PaymentOrderParams(String userName, String password, String hostProviderUrl) {
+        super(userName, password, hostProviderUrl);
+    }
+
     public String getLanguage() {
         return language;
     }

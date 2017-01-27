@@ -12,10 +12,17 @@ public class RegisterOrderParams extends AuthParams {
     private PageView pageView = PageView.DESKTOP;
     private String clientId;
     private String merchantLogin;
-    private String jsonParams;
+    private JsonParams jsonParams = new JsonParams();
     private Integer sessionTimeoutSecs;
     private String expirationDate;
     private String bindingId;
+
+    public RegisterOrderParams() {
+    }
+
+    public RegisterOrderParams(String userName, String password, String hostProviderUrl) {
+        super(userName, password, hostProviderUrl);
+    }
 
     public String getOrderNumber() {
         return orderNumber;
@@ -97,14 +104,6 @@ public class RegisterOrderParams extends AuthParams {
         this.merchantLogin = merchantLogin;
     }
 
-    public String getJsonParams() {
-        return jsonParams;
-    }
-
-    public void setJsonParams(String jsonParams) {
-        this.jsonParams = jsonParams;
-    }
-
     public Integer getSessionTimeoutSecs() {
         return sessionTimeoutSecs;
     }
@@ -127,5 +126,13 @@ public class RegisterOrderParams extends AuthParams {
 
     public void setBindingId(String bindingId) {
         this.bindingId = bindingId;
+    }
+
+    public JsonParams getJsonParams() {
+        return jsonParams;
+    }
+
+    public void setJsonParams(JsonParams jsonParams) {
+        this.jsonParams = jsonParams;
     }
 }

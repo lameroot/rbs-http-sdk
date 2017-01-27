@@ -20,17 +20,8 @@ public abstract class BaseApiRequest<T> implements ApiRequest<T> {
     private final Map<String, String> parameters = new HashMap();
     private byte[] body;
     private final ParametersBuffer buffer = new ParametersBuffer();
-//    private final ObjectMapper objectMapper;
-//    private final Class<T> type;
     private final TypeAdapter<T> typeAdapter;
-
-//    public BaseApiRequest(Class<T> type) {
-//        this.type = type;
-//        objectMapper = new ObjectMapper();
-//        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-//        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-//    }
-
+    private String overrideHostProviderUrl;
 
     public BaseApiRequest(TypeAdapter<T> typeAdapter) {
         this.typeAdapter = typeAdapter;
@@ -112,6 +103,12 @@ public abstract class BaseApiRequest<T> implements ApiRequest<T> {
         parameters.put(key, value);
     }
 
+    protected final void addAuthParameters(AuthParams authParams) {
+        addParameter("userName", authParams.getUserName());
+        addParameter("password", authParams.getPassword());
+        setOverrideHostProviderUrl(authParams.getHostProviderUrl());
+    }
+
     /**
      * Adds {@link Integer} parameter to this request.
      *
@@ -183,5 +180,17 @@ public abstract class BaseApiRequest<T> implements ApiRequest<T> {
     protected void prepareBody() {
     }
 
-    protected abstract String requestUrlBase(HostsProvider hostsProvider);
+    protected String requestUrlBase(HostsProvider hostsProvider) {
+        return (null != overrideHostProviderUrl ? overrideHostProviderUrl : hostsProvider.getRbsApi()) + requestUri();
+    }
+
+    protected abstract String requestUri();
+
+    protected String getOverrideHostProviderUrl() {
+        return overrideHostProviderUrl;
+    }
+
+    protected void setOverrideHostProviderUrl(String overrideHostProviderUrl) {
+        this.overrideHostProviderUrl = overrideHostProviderUrl;
+    }
 }

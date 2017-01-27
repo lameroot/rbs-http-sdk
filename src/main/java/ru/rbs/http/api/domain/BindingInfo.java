@@ -1,8 +1,24 @@
 package ru.rbs.http.api.domain;
 
 public class BindingInfo {
-    public String clientId;
-    public String bindingId;
+    private String clientId;
+    private String bindingId;
+
+    public String getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
+    }
+
+    public String getBindingId() {
+        return bindingId;
+    }
+
+    public void setBindingId(String bindingId) {
+        this.bindingId = bindingId;
+    }
 
     @Override
     public String toString() {

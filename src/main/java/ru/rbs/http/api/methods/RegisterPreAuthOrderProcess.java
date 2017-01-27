@@ -1,20 +1,16 @@
 package ru.rbs.http.api.methods;
 
-import ru.rbs.http.api.client.HostsProvider;
 import ru.rbs.http.api.domain.BaseApiRequest;
 import ru.rbs.http.api.domain.RegisterOrderParams;
 import ru.rbs.http.api.methods.adapters.RegisterPreAuthOrderProcessTypeAdapter;
 
-public class RegisterPreAuthOrderProcess extends BaseProcess {
-
-    public String orderId;
-    public String formUrl;
+public class RegisterPreAuthOrderProcess extends RegisterOrderProcess {
 
     public static final class Request extends BaseApiRequest<RegisterPreAuthOrderProcess> {
 
         @Override
-        protected String requestUrlBase(HostsProvider hostsProvider) {
-            return hostsProvider.getRbsApi() + "/rest/registerPreAuth.do";
+        protected String requestUri() {
+            return "/rest/registerPreAuth.do";
         }
 
         public static Request newInstance(RegisterOrderParams registerOrderParams) {
@@ -27,8 +23,7 @@ public class RegisterPreAuthOrderProcess extends BaseProcess {
         }
 
         protected void addParameters(RegisterOrderParams registerOrderParams) {
-            addParameter("userName", registerOrderParams.getUserName());
-            addParameter("password", registerOrderParams.getPassword());
+            addAuthParameters(registerOrderParams);
             addParameter("orderNumber",registerOrderParams.getOrderNumber());
             addParameter("amount",registerOrderParams.getAmount());
             addParameter("currency",registerOrderParams.getCurrency());
@@ -39,7 +34,7 @@ public class RegisterPreAuthOrderProcess extends BaseProcess {
             addParameter("pageView",registerOrderParams.getPageView().name());
             addParameter("clientId",registerOrderParams.getClientId());
             addParameter("merchantLogin",registerOrderParams.getMerchantLogin());
-            addParameter("jsonParams",registerOrderParams.getJsonParams());
+            addParameter("jsonParams",registerOrderParams.getJsonParams().toString());
             addParameter("sessionTimeoutSecs",registerOrderParams.getSessionTimeoutSecs());
             addParameter("expirationDate",registerOrderParams.getExpirationDate());
             addParameter("bindingId",registerOrderParams.getBindingId());
@@ -52,8 +47,8 @@ public class RegisterPreAuthOrderProcess extends BaseProcess {
         final StringBuilder sb = new StringBuilder("RegisterPreAuthOrderProcess{");
         sb.append("errorCode='").append(getErrorCode()).append('\'');
         sb.append(", errorMessage='").append(getErrorMessage()).append('\'');
-        sb.append("orderId='").append(orderId).append('\'');
-        sb.append(", formUrl='").append(formUrl).append('\'');
+        sb.append(", orderId='").append(getOrderId()).append('\'');
+        sb.append(", formUrl='").append(getFormUrl()).append('\'');
         sb.append('}');
         return sb.toString();
     }

@@ -2,11 +2,11 @@ package ru.rbs.http.api.client.providers;
 
 import ru.rbs.http.api.client.HostsProvider;
 
-public class LocalhostHostProvider implements HostsProvider {
+public class CustomHostProvider implements HostsProvider {
 
     private final String rbsApiUrl;
 
-    public LocalhostHostProvider(String rbsApiUrl) {
+    public CustomHostProvider(String rbsApiUrl) {
         this.rbsApiUrl = rbsApiUrl;
     }
 
