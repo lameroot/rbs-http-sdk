@@ -16,6 +16,10 @@ public class PaymentOrderBindingParams extends AuthParams {
         super(userName, password, hostProviderUrl);
     }
 
+    public PaymentOrderBindingParams(EndpointParams endpointParams) {
+        super(endpointParams);
+    }
+
     public String getMdOrder() {
         return mdOrder;
     }

@@ -12,6 +12,10 @@ public class ReverseParams extends AuthParams {
         super(userName, password, hostProviderUrl);
     }
 
+    public ReverseParams(EndpointParams endpointParams) {
+        super(endpointParams);
+    }
+
     public String getOrderId() {
         return orderId;
     }

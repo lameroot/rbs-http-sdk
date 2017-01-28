@@ -28,6 +28,10 @@ public class PaymentOrderParams extends AuthParams {
         super(userName, password, hostProviderUrl);
     }
 
+    public PaymentOrderParams(EndpointParams endpointParams) {
+        super(endpointParams);
+    }
+
     public String getLanguage() {
         return language;
     }

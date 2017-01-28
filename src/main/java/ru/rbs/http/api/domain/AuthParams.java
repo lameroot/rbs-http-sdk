@@ -15,6 +15,12 @@ public abstract class AuthParams {
         this.hostProviderUrl = hostProviderUrl;
     }
 
+    public AuthParams(EndpointParams endpointParams) {
+        this.userName = endpointParams.getUserName();
+        this.password = endpointParams.getPassword();
+        this.hostProviderUrl = endpointParams.getHostProviderUrl();
+    }
+
     public String getUserName() {
         return userName;
     }

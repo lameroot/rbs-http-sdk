@@ -24,6 +24,10 @@ public class RegisterOrderParams extends AuthParams {
         super(userName, password, hostProviderUrl);
     }
 
+    public RegisterOrderParams(EndpointParams endpointParams) {
+        super(endpointParams);
+    }
+
     public String getOrderNumber() {
         return orderNumber;
     }

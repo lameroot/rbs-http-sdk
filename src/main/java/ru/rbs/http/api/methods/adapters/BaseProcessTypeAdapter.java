@@ -3,10 +3,12 @@ package ru.rbs.http.api.methods.adapters;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import ru.rbs.http.api.methods.BaseProcess;
+import ru.rbs.http.api.util.Strings;
 
 import java.io.IOException;
 
-public abstract class BaseProcessTypeAdapter<T> implements TypeAdapter<T>{
+public abstract class BaseProcessTypeAdapter<T extends BaseProcess> implements TypeAdapter<T>{
 
     protected ObjectMapper objectMapper;
 
@@ -18,7 +20,10 @@ public abstract class BaseProcessTypeAdapter<T> implements TypeAdapter<T>{
 
     @Override
     public T fromJson(String json) throws IOException {
-        return objectMapper.readValue(json,getType());
+        T object = objectMapper.readValue(json,getType());
+        if ( null == object.getErrorCode() ) object.setErrorCode(0);
+        if (Strings.isNullOrEmpty(object.getErrorMessage())) object.setErrorMessage("Success message");
+        return object;
     }
 
     public abstract Class<T> getType();

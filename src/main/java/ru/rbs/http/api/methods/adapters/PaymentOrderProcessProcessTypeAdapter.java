@@ -23,6 +23,10 @@ public class PaymentOrderProcessProcessTypeAdapter extends BaseProcessTypeAdapte
             paymentOrderProcess.setErrorMessage(jsonNode.get("errorMessage").asText());
             return paymentOrderProcess;
         }
+        if ( jsonNode.has("errorCode") ) paymentOrderProcess.setErrorCode(jsonNode.get("errorCode").asInt());
+        else paymentOrderProcess.setErrorCode(0);
+        if ( jsonNode.has("errorMessage") ) paymentOrderProcess.setErrorMessage(jsonNode.get("errorMessage").asText());
+        else paymentOrderProcess.setErrorMessage("Success message");
         paymentOrderProcess.setInfo(jsonNode.has("info") ? jsonNode.get("info").asText() : null);
         ReturnUrlObject returnUrlObject = new ReturnUrlObject();
         if ( jsonNode.has("acsUrl") ) {//3ds payment

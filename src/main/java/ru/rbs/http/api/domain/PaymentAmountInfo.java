@@ -37,4 +37,15 @@ public class PaymentAmountInfo {
     public void setPaymentState(String paymentState) {
         this.paymentState = paymentState;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("PaymentAmountInfo{");
+        sb.append("approvedAmount='").append(approvedAmount).append('\'');
+        sb.append(", depositedAmount='").append(depositedAmount).append('\'');
+        sb.append(", refundedAmount='").append(refundedAmount).append('\'');
+        sb.append(", paymentState='").append(paymentState).append('\'');
+        sb.append('}');
+        return sb.toString();
+    }
 }

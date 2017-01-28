@@ -12,6 +12,10 @@ public class DepositParams extends AuthParams {
         super(userName, password, hostProviderUrl);
     }
 
+    public DepositParams(EndpointParams endpointParams) {
+        super(endpointParams);
+    }
+
     public String getOrderId() {
         return orderId;
     }

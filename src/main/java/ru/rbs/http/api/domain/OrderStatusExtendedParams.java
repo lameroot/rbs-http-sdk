@@ -13,6 +13,10 @@ public class OrderStatusExtendedParams extends AuthParams {
         super(userName, password, hostProviderUrl);
     }
 
+    public OrderStatusExtendedParams(EndpointParams endpointParams) {
+        super(endpointParams);
+    }
+
     public String getOrderId() {
         return orderId;
     }

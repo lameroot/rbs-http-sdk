@@ -4,7 +4,6 @@ import junit.framework.TestCase;
 import org.junit.Test;
 import ru.rbs.http.api.client.ApiClient;
 import ru.rbs.http.api.client.DefaultApiClient;
-import ru.rbs.http.api.client.providers.CustomHostProvider;
 import ru.rbs.http.api.domain.*;
 import ru.rbs.http.api.methods.OrderStatusExtendedProcess;
 import ru.rbs.http.api.methods.PaymentOrderProcess;
@@ -20,15 +19,17 @@ public class RbsRegisterOrderTest extends TestCase {
             .setTimeout(40L)
             //.setHostsProvider(new TestPaymentGateAlfaHostProvider())
             //.setHostsProvider(new LocalhostHostProvider("http://localhost/payment"))
-            .setHostsProvider(new CustomHostProvider("https://web.rbsdev.com/sbrfpayment"))
+            //.setHostsProvider(new CustomHostProvider("https://web.rbsdev.com/sbrfpayment"))
             .create();
 
     @Test
     public void testRegisterOrder() throws Exception {
-        RegisterOrderParams registerOrderParams = new RegisterOrderParams("test","testPwd","https://web.rbsdev.com/alfapayment");
+        //EndpointParams endpointParams = new EndpointParams("test","testPwd","https://3dsec.sberbank.ru/payment");
+        EndpointParams endpointParams = new EndpointParams("test","testPwd","https://test.paymentgate.ru/testpayment");
+        RegisterOrderParams registerOrderParams = new RegisterOrderParams(endpointParams);
         registerOrderParams.setAmount(100L);
         registerOrderParams.setCurrency("810");
-        registerOrderParams.setLanguage("en");
+        registerOrderParams.setLanguage("ru");
         registerOrderParams.setOrderNumber(UUID.randomUUID().toString().substring(0, 20));
         registerOrderParams.setReturnUrl("http://ya.ru");
 
@@ -43,9 +44,9 @@ public class RbsRegisterOrderTest extends TestCase {
         System.out.println(registerOrderProcess);
         System.out.println(registerOrderProcess.getOrderId());
 
+        assertEquals(Integer.valueOf(0), registerOrderProcess.getErrorCode());
 
-
-        PaymentOrderParams paymentOrderParams = new PaymentOrderParams();
+        PaymentOrderParams paymentOrderParams = new PaymentOrderParams(endpointParams);
         paymentOrderParams.setUserName("test");
         paymentOrderParams.setPassword("testPwd");
         paymentOrderParams.setMdOrder(registerOrderProcess.getOrderId());
@@ -54,21 +55,26 @@ public class RbsRegisterOrderTest extends TestCase {
         paymentOrderParams.setCvc("123");
         paymentOrderParams.setExpiry("201912");
         paymentOrderParams.setCardHolder("test test");
-        paymentOrderParams.setLanguage("en");
+        paymentOrderParams.setLanguage("ru");
+
+
 
         PaymentOrderProcess paymentOrderProcess = client.execute(PaymentOrderProcess.Request.newInstance(paymentOrderParams));
         assertNotNull(paymentOrderProcess);
         System.out.println(paymentOrderProcess);
         assertTrue(paymentOrderProcess.isSslPayment());
+        assertEquals(Integer.valueOf(0), paymentOrderProcess.getErrorCode());
 
-        OrderStatusExtendedParams orderStatusExtendedParams = new OrderStatusExtendedParams();
-        orderStatusExtendedParams.setLanguage("en");
+        OrderStatusExtendedParams orderStatusExtendedParams = new OrderStatusExtendedParams(endpointParams);
+        orderStatusExtendedParams.setLanguage("ru");
         orderStatusExtendedParams.setOrderId(registerOrderProcess.getOrderId());
         orderStatusExtendedParams.setUserName("test");
         orderStatusExtendedParams.setPassword("testPwd");
         OrderStatusExtendedProcess orderStatusExtendedProcess = client.execute(OrderStatusExtendedProcess.Request.newInstance(orderStatusExtendedParams));
         assertNotNull(orderStatusExtendedProcess);
+        assertEquals(Integer.valueOf(0), orderStatusExtendedProcess.getErrorCode());
         System.out.println(orderStatusExtendedProcess);
+
     }
 
 }
