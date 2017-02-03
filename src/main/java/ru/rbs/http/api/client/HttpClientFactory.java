@@ -51,6 +51,9 @@ public class HttpClientFactory {
      */
     public static void applyLogging(OkHttpClient.Builder builder) {
         applyLogging(builder, createSslSocketFactory());
+        HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
+        httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        builder.addInterceptor(httpLoggingInterceptor);
     }
 
     /**
